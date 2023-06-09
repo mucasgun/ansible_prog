@@ -1,0 +1,26 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Update apt packages
+    apt:
+      upgrade: yes
+  - name: Install openvpn
+    package:
+      name: openvpn
+      state: present
+  - name: Install openresolv
+    package:
+      name: openresolv
+      state: present
+  - name: Create new openvpn config file from template
+    template:
+      src: clientvpn{{ hostvars[inventory_hostname].ansible_host }}.conf.j2
+      dest: /etc/openvpn/clientvpn{{ hostvars[inventory_hostname].ansible_host }}.conf
+    notify: enable openvpnclient
+  handlers:
+    - name: enable openvpnclient
+      service: 
+        name: openvpn@clientvpn{{ hostvars[inventory_hostname].ansible_host }} 
+        enabled: yes 
+        state: started

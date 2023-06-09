@@ -1,0 +1,24 @@
+client
+dev tun0
+proto tcp-client
+remote 10.129.0.7 1195
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+cipher DES-CBC
+script-security 2
+up /etc/openvpn/update-resolv-conf
+down /etc/openvpn/update-resolv-conf
+<ca>
+-----BEGIN CERTIFICATE-----
+-----END CERTIFICATE-----
+</ca>
+<cert>
+-----BEGIN CERTIFICATE-----
+-----END CERTIFICATE-----
+</cert>
+<key>
+-----BEGIN PRIVATE KEY-----
+-----END PRIVATE KEY-----
+</key>
