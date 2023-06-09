@@ -1,0 +1,8 @@
+app_user: "www-data"
+#http_host: "default"
+#http_conf: "default.conf"
+http_port_apache: "8080"
+http_port_nginx: "80"
+http_port_ssl_apache: "8081"
+http_port_ssl_nginx: "443"
+#disable_default: true

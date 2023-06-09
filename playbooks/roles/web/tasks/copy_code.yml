@@ -1,0 +1,39 @@
+---
+# Config Apache
+- name: Create document root
+  file:
+    path: "/var/www/html"
+    state: directory
+    owner: "{{ app_user }}"
+    mode: '0755'
+
+- name: Set up Apache virtualhost
+  template:
+    src: "apache.conf.j2"
+    dest: "/etc/apache2/sites-available/000-default.conf"
+  notify:
+    - Reload Nginx
+    - Reload Apache
+
+- name: config Apache ports.conf
+  template:
+    src: "apache.ports.conf.j2"
+    dest: "/etc/apache2/ports.conf"
+  notify:
+    - Reload Nginx
+    - Reload Apache
+
+# PHP Info Page
+- name: Set up PHP info page
+  template:
+    src: "info.php.j2"
+    dest: "/var/www/html/info.php" 
+    
+# Config Nginx
+- name: Set up nginx conf file
+  template:
+    src: "nginx.conf.j2"
+    dest: "/etc/nginx/sites-available/default"
+  notify: 
+    - Reload Nginx
+    - Reload Apache

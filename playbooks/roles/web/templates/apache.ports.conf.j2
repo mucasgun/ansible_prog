@@ -1,0 +1,10 @@
+Listen {{ http_port_apache }}
+
+<IfModule ssl_module>
+	Listen {{ http_port_ssl_apache }}
+</IfModule>
+
+<IfModule mod_gnutls.c>
+	Listen {{ http_port_ssl_apache }}
+</IfModule>
+

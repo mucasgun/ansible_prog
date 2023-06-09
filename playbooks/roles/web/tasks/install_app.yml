@@ -1,0 +1,15 @@
+---
+# Apache
+- name: Install LAP Packages
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - apache2
+    - php
+    - libapache2-mod-php
+
+# Nginx 
+- name: Install nginx Packages
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - nginx
+    - php-fpm
