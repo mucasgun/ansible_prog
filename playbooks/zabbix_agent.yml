@@ -1,0 +1,6 @@
+---
+- hosts: vpnclients 
+  become:
+    true
+  roles:
+   - zabbix

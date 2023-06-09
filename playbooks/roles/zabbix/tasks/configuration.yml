@@ -1,0 +1,8 @@
+---
+- name: Create new zabbix config file from template
+  template:
+    src: zabbix_agentd.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+
+  notify:
+    - enable zabbix
