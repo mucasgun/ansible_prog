@@ -1,0 +1,51 @@
+---
+- hosts: test 
+  become: yes
+  tasks:
+    - name: Install OpenJDK Java
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - openjdk-11-jre-headless
+    #elasitc
+    - name: Install elastic
+      apt:
+        deb: https://www.techplanet.pro/d/elasticsearch-7.17.1-amd64.deb
+    # Configurations elastic
+    - name: Updating the config file to allow outside access
+      lineinfile:
+        destfile: /etc/elasticsearch/elasticsearch.yml
+        regexp: 'network.host:'
+        line: 'network.host: localhost'
+    # Start Elasticsearch
+    - name: Starting Elasticsearch
+      service:
+        name: elasticsearch
+        state: started
+    #kibana
+    - name: Install kibana
+      apt:
+        deb: https://www.techplanet.pro/d/kibana-7.17.1-amd64.deb
+    # Configurations kibana
+    - name: Updating the config file to allow outside access
+      lineinfile:
+        destfile: /etc/kibana/kibana.yml
+        regexp: 'server.host:'
+        line: 'server.host: 0.0.0.0'
+    - name: Defining server port
+      lineinfile:
+        destfile: /etc/kibana/kibana.yml
+        regexp: 'server.port:'
+        line: 'server.port: 5601'
+    - name: Defining Elasticsearch URL
+      lineinfile:
+        destfile: /etc/kibana/kibana.yml
+        regexp: 'elasticsearch.hosts:'
+        line: 'elasticsearch.hosts: "http://localhost:9200"'
+    # Starting Kibana
+    - name: Starting Kibana
+      service:
+        name: kibana
+        state: started
+ 
