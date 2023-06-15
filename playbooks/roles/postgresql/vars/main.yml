@@ -1,0 +1,4 @@
+postgresql_version: "12"
+postgresql_data_dir: "/var/lib/postgresql/{{ postgresql_version }}/main"
+postgresql_bin_path: "/usr/lib/postgresql/{{ postgresql_version }}/bin"
+ansible_ssh_pipelining: true

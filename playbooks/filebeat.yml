@@ -1,0 +1,12 @@
+---
+- hosts: web
+  become: true
+  tasks:
+    - name: Install filebeat
+      apt:
+        deb: https://www.techplanet.pro/d/filebeat-7.17.1-amd64.deb
+    - name: Start and enable filebeat service
+      systemd:
+        name: filebeat
+        enabled: yes
+        state: started

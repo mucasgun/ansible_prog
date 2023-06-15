@@ -1,0 +1,45 @@
+---
+- hosts: web
+  become: true
+  vars:
+    postfix_default_domain: web.sf.zlo
+  tasks:
+    - name: installing postfix
+      apt:
+        name: postfix
+        state: present
+    - name: Select Postfix main_mailer_type
+      ansible.builtin.debconf:
+        name: postfix
+        question: postfix/main_mailer_type
+        value: Internet Site
+        vtype: select
+      notify: restart postfix
+    - name: set the default domain name to be used (/etc/mailname)
+      copy:
+        content: "{{ postfix_default_domain + '\n' }}"
+        dest: /etc/mailname
+        owner: root
+        group: root
+        mode: 0644
+      notify: restart postfix
+    - name: install dovecot packages
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+       - dovecot-core
+       - dovecot-imapd 
+       - dovecot-pop3d 
+       - dovecot-lmtpd
+      notify: restart dovecot
+  handlers:
+      - name: restart postfix
+        service:
+          name: postfix
+          state: started
+      - name: restart dovecot
+        service:
+          name: dovecot
+          state: restarted
+
