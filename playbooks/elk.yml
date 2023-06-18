@@ -1,5 +1,5 @@
 ---
-- hosts: test 
+- hosts: elk 
   become: yes
   tasks:
     - name: Install OpenJDK Java
@@ -8,12 +8,13 @@
         state: present
       with_items:
         - openjdk-11-jre-headless
+        - openjdk-11-jdk-headless
     #elasitc
     - name: Install elastic
       apt:
         deb: https://www.techplanet.pro/d/elasticsearch-7.17.1-amd64.deb
     # Configurations elastic
-    - name: Updating the config file to allow outside access
+    - name: Updating config
       lineinfile:
         destfile: /etc/elasticsearch/elasticsearch.yml
         regexp: 'network.host:'
@@ -47,5 +48,4 @@
     - name: Starting Kibana
       service:
         name: kibana
-        state: started
- 
+        state: started 
