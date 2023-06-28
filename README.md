@@ -25,14 +25,14 @@
 		ansible-playbook ./playbooks/[playbook].yml -u [ansible_user]
 
 ** перед прокаткой ролей необходимо просмотреть/скорректировать файлы и переименовать [файлы_example] в [файлы]:
- - ./playbooks/templates/clientvpn01.conf.j2_example (тлько для openvpn_playbook.yml)
+ - ./playbooks/templates/clientvpn01.conf.j2_example (только для openvpn_playbook.yml)
  - ./playbooks/roles/[role_name]/{templates,vars}/[file].yml
 
 
 ## Использование docker
 Каталог compose содержит два  docker-compose файла:
-- docker-compose_ek.yml
 - docker-compose_zabbix_grafana.yml
+- docker-compose_ek.yml
 
 Для запуска сервисов в докере: 
 1) установить docker и docker-compose
