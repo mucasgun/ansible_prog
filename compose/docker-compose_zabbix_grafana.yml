@@ -11,6 +11,12 @@ services:
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - zabbix.env
+    dns:
+      - 8.8.8.8
+      - 172.16.12.4
+    networks:
+      default:
+        ipv4_address: 172.18.0.2
   love-grafana-server:
     image: grafana/grafana:7.5.17-ubuntu
     container_name: love-grafana-server
@@ -22,3 +28,12 @@ services:
     restart: unless-stopped
     env_file:
       - grafana.env
+    networks:
+      default:
+        ipv4_address: 172.18.0.3
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16
