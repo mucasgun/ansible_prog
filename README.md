@@ -20,7 +20,7 @@
 
 		%sudo ALL=(ALL)       NOPASSWD: ALL
 3) настроить ssh доступ для пользователя  [ansible_user] на сервере-клиенте
-4) выполнить команду 
+4) выполнить команду **
 
 		ansible-playbook ./playbooks/[playbook].yml -u [ansible_user]
 
